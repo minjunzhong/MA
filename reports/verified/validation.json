@@ -1,0 +1,140 @@
+{
+  "recorded_at_utc": "2026-10-21T19:05:37.267363+00:00",
+  "platform": "Linux-5.15.0-185-generic-x86_64-with-glibc2.35",
+  "python": "3.10.12",
+  "dependencies": {
+    "cocotb": "1.9.2",
+    "pyuvm": "3.0.0",
+    "pytest": "8.3.5"
+  },
+  "simulator": "Icarus Verilog version 11.0 (stable) ()",
+  "red_baseline_commit": "419bfef",
+  "red": {
+    "tests": 9,
+    "failed": 9,
+    "cases": [
+      {
+        "name": "SignedDotProducts",
+        "failed": true,
+        "skipped": false,
+        "simulation_ns": "1971.001"
+      },
+      {
+        "name": "UnsignedAndMulticast",
+        "failed": true,
+        "skipped": false,
+        "simulation_ns": "9711.001"
+      },
+      {
+        "name": "AccumulateAndWrap",
+        "failed": true,
+        "skipped": false,
+        "simulation_ns": "32691.000999999997"
+      },
+      {
+        "name": "ConvolutionRowStationary",
+        "failed": true,
+        "skipped": false,
+        "simulation_ns": "5811.001000000004"
+      },
+      {
+        "name": "RandomizedJobs",
+        "failed": true,
+        "skipped": false,
+        "simulation_ns": "23091.001000000004"
+      },
+      {
+        "name": "ProtocolAndConfiguration",
+        "failed": true,
+        "skipped": false,
+        "simulation_ns": "15411.00099999999"
+      },
+      {
+        "name": "InvalidRequests",
+        "failed": true,
+        "skipped": false,
+        "simulation_ns": "51.00100000000384"
+      },
+      {
+        "name": "ResetAndAbort",
+        "failed": true,
+        "skipped": false,
+        "simulation_ns": "30771.001000000004"
+      },
+      {
+        "name": "MetricsScaling",
+        "failed": true,
+        "skipped": false,
+        "simulation_ns": "7731.001000000004"
+      }
+    ]
+  },
+  "green": {
+    "tests": 9,
+    "failed": 0,
+    "cases": [
+      {
+        "name": "SignedDotProducts",
+        "failed": false,
+        "skipped": false,
+        "simulation_ns": "35461.001"
+      },
+      {
+        "name": "UnsignedAndMulticast",
+        "failed": false,
+        "skipped": false,
+        "simulation_ns": "11221.001000000004"
+      },
+      {
+        "name": "AccumulateAndWrap",
+        "failed": false,
+        "skipped": false,
+        "simulation_ns": "44961.001"
+      },
+      {
+        "name": "ConvolutionRowStationary",
+        "failed": false,
+        "skipped": false,
+        "simulation_ns": "6431.001000000004"
+      },
+      {
+        "name": "RandomizedJobs",
+        "failed": false,
+        "skipped": false,
+        "simulation_ns": "92341.001"
+      },
+      {
+        "name": "ProtocolAndConfiguration",
+        "failed": false,
+        "skipped": false,
+        "simulation_ns": "17311.00099999999"
+      },
+      {
+        "name": "InvalidRequests",
+        "failed": false,
+        "skipped": false,
+        "simulation_ns": "1681.0010000000184"
+      },
+      {
+        "name": "ResetAndAbort",
+        "failed": false,
+        "skipped": false,
+        "simulation_ns": "94191.00099999996"
+      },
+      {
+        "name": "MetricsScaling",
+        "failed": false,
+        "skipped": false,
+        "simulation_ns": "56031.00100000005"
+      }
+    ]
+  },
+  "source_sha256": {
+    "rtl/eyeriss_cluster.sv": "99af790f0c3d8fe335d31cd3ccf3697cd87cd8f77d44a7c41d952157842984aa",
+    "rtl/eyeriss_four_cluster.sv": "47d046974909feca3b8bc71dde6833e15d7febbda3510a2428008a80c18e8692",
+    "rtl/eyeriss_pe.sv": "8dc9d5959212c5ececd4f16ea6c1781e133e7f16b2ab59b98f886ec97bc949a4",
+    "tests/reference.py": "03eb582f4ce92abaacffe1232216d9217410a4ccf010a0347241b81a070ce4ec",
+    "tests/test_four_cluster.py": "4570cf29f0f4c61fad897f2b94a52c958cdffebf9dff2cbc4c75e649ef73655e"
+  },
+  "note": "Red used the test-first stub and original tests; green uses final tests and real RTL. See git history for test refinements. These are measured simulation results, not paper PPA."
+}

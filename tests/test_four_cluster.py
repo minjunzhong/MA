@@ -96,6 +96,9 @@ class OutputMonitor(uvm_component):
 
 
 class ArrayDriver(uvm_component):
+    def build_phase(self):
+        self.ticks = 0
+
     async def cycle(self, **signals):
         d = cocotb.top
         await FallingEdge(d.clk)
@@ -105,6 +108,7 @@ class ArrayDriver(uvm_component):
         before = {name: int(getattr(d, name).value) for name in OBSERVE}
         await RisingEdge(d.clk)
         await Timer(1, units='ns')
+        self.ticks += 1
         return before
 
     async def reset(self):
@@ -142,6 +146,7 @@ class ArrayDriver(uvm_component):
         d = cocotb.top
         scoreboard.expected.extend(expected)
         before_count = len(scoreboard.actual)
+        launch_tick = self.ticks
         pre = await self.cycle(start_valid=1, out_ready=0, **cfg)
         assert pre['start_ready'] and not pre['load_ready'], 'Start must have priority'
         overrides = dict(start_valid=0)
@@ -150,6 +155,7 @@ class ArrayDriver(uvm_component):
                                     cfg_reduce_rows=1, cfg_psum_slot=15))
             overrides.update(load_valid=1, load_kind=0, load_cluster_mask=15,
                              load_pe_mask=4095, load_addr=0, load_data=0)
+            overrides['start_valid'] = 1  # busy start must be ignored, too
         pre = await self.cycle(**overrides)
         assert not pre['load_ready'] and not pre['start_ready']
         await self.cycle(load_valid=0, start_valid=0)
@@ -178,11 +184,13 @@ class ArrayDriver(uvm_component):
         assert int(d.compute_cycles.value) == cfg['cfg_len']
         assert int(d.mac_count.value) == cfg['cfg_cluster_mask'].bit_count() * 24 * cfg['cfg_len']
         assert not int(d.error.value)
+        latency = self.ticks - launch_tick - 1
         await self.cycle(out_ready=0)
         assert not int(d.done.value), 'done must be one cycle'
         assert not int(d.busy.value) and int(d.start_ready.value)
         return dict(compute_cycles=int(d.compute_cycles.value), macs=int(d.mac_count.value),
                     outputs=len(expected), drain_poll_cycles=cycles,
+                    start_to_done_cycles=latency,
                     active_clusters=cfg['cfg_cluster_mask'].bit_count())
 
 
@@ -215,8 +223,15 @@ class BaseTest(uvm_test):
         self.drop_objection()
 
     async def job(self, data, cfg, seeds=False, **kwargs):
+        load_start = self.dr.ticks
         await self.dr.program(data, cfg, seeds)
-        return await self.dr.run_job(cfg, data.reference(cfg), self.sb, **kwargs)
+        load_cycles = self.dr.ticks - load_start
+        result = await self.dr.run_job(cfg, data.reference(cfg), self.sb, **kwargs)
+        result['host_load_cycles'] = load_cycles
+        result['end_to_end_cycles'] = load_cycles + 1 + result['start_to_done_cycles']
+        result['compute_macs_per_cycle'] = result['macs'] / result['compute_cycles']
+        result['end_to_end_macs_per_cycle'] = result['macs'] / result['end_to_end_cycles']
+        return result
 
 
 @pyuvm.test()
