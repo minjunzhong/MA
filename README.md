@@ -144,3 +144,13 @@ GENUS_BIN="$GENUS" python3 scripts/run_genus.py --stage synthesize
 | `.vscode/tasks.json` | Linux/Remote SSH/WSL 测试任务 |
 
 Reference papers and proprietary CAD/PDK files are not distributed here.
+
+## 第一版已测结果
+
+- pyuvm：9/9 验收测试通过，红灯占位版本 0/9；远程重克隆后再次验证通过。
+- Verilator lint 与 GitHub Actions：通过。
+- Genus 示范综合：Nangate45 typical、10 ns 目标下 WNS +5.6981 ns，TNS 0。
+- Vectorless 功耗估计约 97.8 mW；存储使用寄存器推断，没有 SRAM 宏和布局布线。
+
+完整数值、原始报告和限制见 [验证记录](docs/validation.md)。这组示范 PPA 不是课程目标
+工艺或论文 65 nm 的结果，也不是 Fmax 或真实 workload 功耗。

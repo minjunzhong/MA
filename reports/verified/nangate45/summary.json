@@ -1,0 +1,40 @@
+{
+  "recorded_at_utc": "2026-10-21T19:41:40.271559+00:00",
+  "tool": "Genus 21.17-s066_1",
+  "synthesis_source_commit": "298814c66917c578b5f1f672152fb18850bdf443",
+  "completion_marker_verified": true,
+  "library": "NangateOpenCellLibrary_typical",
+  "library_sha256": "8d540a4d4cf6d09d27c87ad067857a9c0c2eeb023ab7a56e058cd3113db4e9b1",
+  "library_source": "https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts/tree/master/flow/platforms/nangate45",
+  "clock_period_ns": 10.0,
+  "clock_frequency_mhz": 100.0,
+  "worst_setup_slack_ps": 5698.1,
+  "tns_ps": 0.0,
+  "violating_paths": 0,
+  "leaf_cells": 322276,
+  "sequential_cells": 112610,
+  "combinational_cells": 209666,
+  "cell_area": 895146.658,
+  "cell_area_unit": "native timing-library area units",
+  "power_w": {
+    "leakage": 0.016632,
+    "internal": 0.0630416,
+    "switching": 0.018098,
+    "total": 0.0977716
+  },
+  "physical_stage": "pre-layout wireload estimate",
+  "wireload_model": "5K_hvratio_1_1",
+  "activity": "vectorless; no workload SAIF",
+  "memories": "register inferred, no SRAM macro mapping",
+  "external_io": "10% period delays; 5% clock uncertainty; no explicit external capacitive load or driving cell; reset false path",
+  "fmax_measured": false,
+  "nom_voltage": 1.1,
+  "nom_temperature": 25.0,
+  "executed_source_sha256": {
+    "rtl/eyeriss_cluster.sv": "99af790f0c3d8fe335d31cd3ccf3697cd87cd8f77d44a7c41d952157842984aa",
+    "rtl/eyeriss_four_cluster.sv": "47d046974909feca3b8bc71dde6833e15d7febbda3510a2428008a80c18e8692",
+    "rtl/eyeriss_pe.sv": "8dc9d5959212c5ececd4f16ea6c1781e133e7f16b2ab59b98f886ec97bc949a4",
+    "synth/run.tcl": "20bc01e552942bc8525a1428963124a4f1f59a5d803ed0a879cf916b8c8abf8b",
+    "synth/constraints.sdc": "deb8b31a1b1d2d1b3b3dc7157606214c9d9e9622066b88b8bba65af1af987ef7"
+  }
+}

@@ -84,6 +84,53 @@ uses the publicly available Nangate45 typical library from OpenROAD-flow-scripts
 Any synthesis result is to be interpreted only with these assumptions. Original
 paper speed/area/power numbers are not a valid comparison target for this baseline.
 
+### Completed demonstration synthesis
+
+Genus completed all stages and printed the exact `MA_SYNTHESIS_COMPLETED` marker.
+Native reports and exported constraints are saved under
+[`reports/verified/nangate45`](../reports/verified/nangate45/); `summary.json`
+records the executed source and library hashes. No library or 39 MB mapped netlist
+is redistributed. The mapped netlist remains on the EDA machine under
+`~/ma-four-cluster-v1/build/genus/mapped.v`.
+
+| Quantity | Result |
+|---|---:|
+| Library / corner | Nangate45 typical, nominal 1.1 V, 25 C |
+| Clock target | 10 ns / 100 MHz |
+| Worst setup slack | +5698.1 ps (+5.6981 ns) |
+| TNS / violating paths | 0 ps / 0 |
+| Leaf standard cells | 322276 |
+| Sequential / combinational cells | 112610 / 209666 |
+| Cell area | 895146.658 native timing-library area units |
+| Vectorless total power | 0.0977716 W (97.7716 mW) |
+| Leakage / internal / switching | 16.632 / 63.0416 / 18.098 mW |
+| Reported elapsed synthesis runtime | 2183 s |
+
+The 100 MHz setup target is met in this **pre-layout wireload model**. This is not
+a measured maximum frequency, hold/physical signoff, a manufactured-chip result,
+or a comparison against the Eyeriss paper. Timing uses enclosed wireload model
+`5K_hvratio_1_1`, not extracted routing. Power is vectorless, with no clock-tree
+implementation or workload activity. Cell area is not floorplan/die area.
+
+The reported worst setup path is from `out_pe_reg[0]` through output selection and
+row-reduction arithmetic to `out_psum[19]`; reported data path delay is 2802 ps.
+The sequential cell count is consistent with the intentionally register-inferred
+scratchpads. The power report attributes 68.68% of its estimated total to registers.
+These are useful baseline costs for later SRAM/buffering/NoC changes, not proof
+that the original Eyeriss architecture has the same bottlenecks.
+
+The synthesis source is implementation commit `298814c`. Subsequent changes refine
+tests, documentation, reporting and run guards without changing the three RTL files
+or timing constraints; the hashes make that correspondence independently checkable.
+
+### Published-project usability check
+
+The project was freshly cloned from GitHub to `~/MA` on `prakt19`; `.venv` points to
+the installed project Python environment. The full strengthened regression and
+lint passed there, and `scripts/run_genus.py --stage parse` validated its completion
+marker against an actual Genus run. VS Code Remote - SSH can open that directory
+and run the supplied Linux tasks directly.
+
 ## GitHub CI
 
 The first complete implementation commit `298814c` was pushed successfully and its

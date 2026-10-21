@@ -1,0 +1,6 @@
+Library (external): /nas/ei/home/ge47cup/ma-openlibs/NangateOpenCellLibrary_typical.lib
+Clock period (library time units): 10
+Input/output delay: 10% of clock period
+Clock uncertainty: 5% of clock period
+Power: vectorless estimate; no measured switching activity
+Memories: register inferred; no SRAM macro mapping
