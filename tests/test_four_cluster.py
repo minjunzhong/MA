@@ -254,6 +254,7 @@ class UnsignedAndMulticast(BaseTest):
         await self.dr.load(0, 0b1010, 0b101001010101, 2, 255)
         await self.dr.load(1, 0b0101, 0b010110101010, 3, 0x807f)
         await self.dr.load(0, 0, 4095, 0, 99)  # zero mask is a no-op
+        await self.dr.load(0, 15, 0, 0, 99)  # independently check a zero PE mask
         for c in range(4):
             for p in range(12):
                 if (0b1010 >> c) & (0b101001010101 >> p) & 1:
@@ -336,7 +337,14 @@ class InvalidRequests(BaseTest):
             await self.dr.reset()
             await self.dr.load(kind, 15, 4095, addr, 99)
             assert int(cocotb.top.error.value)
-        await self.job(Data(66), config(cfg_len=2, cfg_cluster_mask=1), seed=66)
+        data, cfg = Data(66), config(cfg_len=2, cfg_cluster_mask=1, cfg_accumulate=1)
+        await self.dr.program(data, cfg, seeds=True)
+        # Detect an illegal address silently aliasing valid address zero in a PE.
+        # Do not reload afterwards: that would hide the corruption being tested.
+        await self.dr.load(0, 1, 4095, 16, 99)
+        await self.dr.load(2, 1, 4095, 32, 99)
+        assert int(cocotb.top.error.value)
+        await self.dr.run_job(cfg, data.reference(cfg), self.sb, seed=66)
 
 
 @pyuvm.test()

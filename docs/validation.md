@@ -13,6 +13,8 @@
    attempt a start while busy, and enforce nonzero exit on failed XML results.
    The complete final regression again passed **9/9**. No acceptance assertions
    were weakened to obtain a passing result.
+   Additional assertions check both zero-mask no-ops and invalid memory addresses
+   without reloading data afterwards, so a silently aliased write cannot be hidden.
 5. Verilator lint passed with `-Wall -Wno-SYNCASYNCNET`. The one named waiver
    documents the intentionally synchronous write qualification of unreset
    scratchpads alongside asynchronous control/accumulator reset. No blanket

@@ -49,7 +49,7 @@ hardware scheduler for arbitrary CNN layers.
 
 ## Interface contract (single clock; active-low asynchronous reset)
 
-All transfers use `valid && ready` sampled on the rising clock edge.
+With reset deasserted, all transfers use `valid && ready` sampled on the rising clock edge.
 
 | Ports | Width / behavior |
 |---|---|
