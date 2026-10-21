@@ -1,6 +1,6 @@
 # Technology-mapped Genus Common UI flow. Technology libraries stay external.
 set root [file normalize [file join [file dirname [info script]] ..]]
-if {![info exists ::env(LIBERTY_FILE)] || ![file isfile $::env(LIBERTY_FILE)]} {
+if {![info exists ::env(LIBERTY_FILE)] || ![file isfile $::env(LIBERTY_FILE)] || ![file readable $::env(LIBERTY_FILE)]} {
     error "Set LIBERTY_FILE to a readable, authorized Liberty timing library."
 }
 set out [file join $root build genus]
@@ -13,6 +13,7 @@ read_hdl -sv [list [file join $root rtl eyeriss_pe.sv] \
                   [file join $root rtl eyeriss_four_cluster.sv]]
 elaborate eyeriss_four_cluster
 check_design -unresolved
+report_units > [file join $out units.rpt]
 source [file join $root synth constraints.sdc]
 set_db syn_generic_effort medium
 set_db syn_map_effort medium
@@ -34,6 +35,7 @@ puts $manifest "Input/output delay: 10% of clock period"
 puts $manifest "Clock uncertainty: 5% of clock period"
 puts $manifest "Power: vectorless estimate; no measured switching activity"
 puts $manifest "Memories: register inferred; no SRAM macro mapping"
+puts $manifest "I/O: no explicit driving cell or external capacitive load; tool defaults"
 close $manifest
 puts "MA_SYNTHESIS_COMPLETED"
 exit

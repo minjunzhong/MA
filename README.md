@@ -100,7 +100,7 @@ GitHub Actions 会重新执行功能测试与 lint；不在 CI 内运行需要�
 ```bash
 export LANG=C LC_ALL=C
 GENUS=/nas/ei/share/tools/cadence/GENUS/GENUS_21.17.000-ISR7/bin/genus
-"$GENUS" -batch -files synth/read_hdl.tcl
+GENUS_BIN="$GENUS" python3 scripts/run_genus.py --stage parse
 ```
 
 真正的工艺映射需要老师提供有读取权限的 Liberty 文件及适用 corner：
@@ -109,11 +109,12 @@ GENUS=/nas/ei/share/tools/cadence/GENUS/GENUS_21.17.000-ISR7/bin/genus
 export LIBERTY_FILE=/absolute/path/to/authorized_corner.lib
 # Unit is the Liberty time unit; 10 is 10 ns only for a 1 ns library.
 export CLOCK_PERIOD=10
-"$GENUS" -batch -files synth/run.tcl
+GENUS_BIN="$GENUS" python3 scripts/run_genus.py --stage synthesize
 ```
 
 该服务器上的 Genus 在展开阶段也要求目标库；设置 `LIBERTY_FILE` 后，可用
-`synth/elaborate.tcl` 只做展开检查。仓库还提供一个从 OpenROAD 官方仓库下载开源
+`python3 scripts/run_genus.py --stage elaborate` 只做展开检查。运行包装器会检查完成标记，
+避免工具遇到 Tcl 错误却返回退出码 0 时误报成功。仓库还提供一个从 OpenROAD 官方仓库下载开源
 Nangate45 库的脚本用于流程示范。该库是用于研究/测试的不可制造示范库，不是学校
 的目标 PDK，也不是论文的 TSMC 65 nm；这些结果只能在相同示范条件下比较：
 
@@ -121,7 +122,7 @@ Nangate45 库的脚本用于流程示范。该库是用于研究/测试的不可
 python3 scripts/fetch_demo_library.py
 export LIBERTY_FILE="$PWD/build/demo-lib/NangateOpenCellLibrary_typical.lib"
 export CLOCK_PERIOD=10
-"$GENUS" -batch -files synth/run.tcl
+GENUS_BIN="$GENUS" python3 scripts/run_genus.py --stage synthesize
 ```
 
 输出位于 `build/genus/`：timing、area、QoR、vectorless power、网表、SDC 和假设记录。

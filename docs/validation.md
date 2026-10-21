@@ -71,9 +71,21 @@ uses the publicly available Nangate45 typical library from OpenROAD-flow-scripts
 - Purpose: research/test, non-manufacturable standard-cell library.
 - Not the paper's TSMC 65 nm process or the course's target PDK.
 - Clock target 10 library time units; I/O delay 10%, uncertainty 5%; reset paths excluded.
+- A separate Genus elaboration probe confirmed `Time_unit :1000ps`; the demo
+  target is therefore 10 ns (100 MHz), not 10 ps. Exported SDC confirms the unit.
+- No explicit external capacitive load or input driving cell is specified;
+  the tool's defaults are used. This limits external-interface timing realism.
 - No SRAM macros, place-and-route, clock-tree synthesis, routing extraction,
   workload SAIF, formal equivalence or gate-level regression was performed.
 - Vectorless power is an assumption-driven estimate, not measured application energy.
 
 Any synthesis result is to be interpreted only with these assumptions. Original
 paper speed/area/power numbers are not a valid comparison target for this baseline.
+
+## GitHub CI
+
+The first complete implementation commit `298814c` was pushed successfully and its
+[GitHub Actions run](https://github.com/minjunzhong/MA/actions/runs/39658735234)
+completed successfully. This independently reran simulation, XML validation and
+Verilator lint on an Ubuntu GitHub runner. Later documentation/report-only commits
+do not change the RTL source hashes recorded in the verification artifact.
