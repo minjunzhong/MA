@@ -28,7 +28,7 @@
 - One deterministic randomized suite with 12 jobs, plus directed/edge-case jobs;
   random seeds are fixed in the tests. This is an initial regression, not exhaustive
   verification or functional coverage closure.
-- Final full suite: 359629.01 ns simulated time; real runtime depends on the host.
+- Final strengthened suite: 360169.01 ns simulated time; real runtime depends on the host.
 
 The pyuvm monitor and scoreboard compare every accepted output ID/data against the
 reference. Tests also check output stability under stalls, last markers, completion,

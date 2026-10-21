@@ -1,5 +1,5 @@
 {
-  "recorded_at_utc": "2026-10-21T19:05:37.267363+00:00",
+  "recorded_at_utc": "2026-10-21T19:28:41.358274+00:00",
   "platform": "Linux-5.15.0-185-generic-x86_64-with-glibc2.35",
   "python": "3.10.12",
   "dependencies": {
@@ -83,7 +83,7 @@
         "name": "UnsignedAndMulticast",
         "failed": false,
         "skipped": false,
-        "simulation_ns": "11221.001000000004"
+        "simulation_ns": "11241.001000000004"
       },
       {
         "name": "AccumulateAndWrap",
@@ -113,7 +113,7 @@
         "name": "InvalidRequests",
         "failed": false,
         "skipped": false,
-        "simulation_ns": "1681.0010000000184"
+        "simulation_ns": "2201.0010000000184"
       },
       {
         "name": "ResetAndAbort",
@@ -134,7 +134,7 @@
     "rtl/eyeriss_four_cluster.sv": "47d046974909feca3b8bc71dde6833e15d7febbda3510a2428008a80c18e8692",
     "rtl/eyeriss_pe.sv": "8dc9d5959212c5ececd4f16ea6c1781e133e7f16b2ab59b98f886ec97bc949a4",
     "tests/reference.py": "03eb582f4ce92abaacffe1232216d9217410a4ccf010a0347241b81a070ce4ec",
-    "tests/test_four_cluster.py": "4570cf29f0f4c61fad897f2b94a52c958cdffebf9dff2cbc4c75e649ef73655e"
+    "tests/test_four_cluster.py": "8fca9fdce1bb271dbaa7b03297edc722697ebc82205535bb665ee04ec3f28244"
   },
   "note": "Red used the test-first stub and original tests; green uses final tests and real RTL. See git history for test refinements. These are measured simulation results, not paper PPA."
 }
