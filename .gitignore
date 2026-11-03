@@ -1,0 +1,12 @@
+__pycache__/
+.pytest_cache/
+.venv/
+build/
+sim_build/
+reports/local/
+*.vcd
+*.fst
+*.log
+.env
+*.key
+*.pem

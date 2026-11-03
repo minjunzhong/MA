@@ -1,0 +1,18 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "RTL: PE, cluster and router tests",
+      "type": "shell",
+      "command": "python3 scripts/test_stage3.py",
+      "group": {"kind": "test", "isDefault": true},
+      "problemMatcher": []
+    },
+    {
+      "label": "RTL: Verilator lint",
+      "type": "shell",
+      "command": "python3 scripts/test_stage3.py --lint-only",
+      "problemMatcher": []
+    }
+  ]
+}
